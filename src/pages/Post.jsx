@@ -1,19 +1,25 @@
-import {useLoaderData, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-
+import {useParams} from "react-router-dom";
 
 export function Post() {
-    console.log("Post rendered");
-    const post = useLoaderData();
+  const { id } = useParams();
+  const [ post, setPost ] = useState();
 
-    if(!post){
-        return <h1>Loading ...</h1>
-    }
+  useEffect(() => {
+    fetch(`http://localhost:3000/posts/${id}`)
+      .then(response => response.json())
+      .then(post => setPost(post))
+  }, []);
+
+  if(!post) {
+    return <div>Loading post...</div>
+  }
 
     return (
-        <div>
-            <h1>Post {post.id}</h1>
-            <div>{post.title}</div>
+        <div className="container py-5">
+          <div className="alert alert-warning">You are an admin! you can delete</div>
+            <h1>{post.title}</h1>
+            <p>{post.body}</p>
         </div>
     )
 }

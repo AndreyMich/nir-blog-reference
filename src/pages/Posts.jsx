@@ -1,24 +1,23 @@
-import {useEffect, useState} from "react";
-import {Link, useLoaderData, useNavigation} from "react-router-dom";
-import {GlobalSpinner} from "../components/GlobalSpinner.jsx";
+import {Link, useLoaderData} from "react-router-dom";
 
 export function Posts() {
-    console.log('posts rendered');
+  const posts = useLoaderData()
 
-    const posts = useLoaderData();
+  return (
+      <div className="container py-5">
 
-    return (
-        <div>
-            <h1>Posts</h1>
+        <h2 className="my-2">What's going on?</h2>
 
-            <ul>
-                {posts.map(post => (
-                    <li key={post.id}>
-                        <Link to={`/post/${post.id}`}>{post.title}</Link>
-                        <p>{post.body}</p>
-                    </li>
-                ))}
-            </ul>
+        <div className='list-group list-group-flush'>
+          {posts.map(post => (
+
+              <Link to={`/posts/${post.id}`}
+                    className='list-group-item list-group-item-action ps-0'>
+                {post.title}
+              </Link>
+
+          ))}
         </div>
-    )
+      </div>
+  )
 }
