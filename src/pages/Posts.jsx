@@ -1,25 +1,24 @@
 import {useEffect, useState} from "react";
+import {Link, useLoaderData, useNavigation} from "react-router-dom";
+import {GlobalSpinner} from "../components/GlobalSpinner.jsx";
 
 export function Posts() {
-  const [posts, setPosts] = useState([]);
+    console.log('posts rendered');
 
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(json => setPosts(json))
-  }, []);
+    const posts = useLoaderData();
 
     return (
         <div>
             <h1>Posts</h1>
-          <ul>
+
+            <ul>
                 {posts.map(post => (
                     <li key={post.id}>
-                        <h2>{post.title}</h2>
+                        <Link to={`/post/${post.id}`}>{post.title}</Link>
                         <p>{post.body}</p>
                     </li>
                 ))}
-          </ul>
+            </ul>
         </div>
     )
 }
